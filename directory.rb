@@ -1,4 +1,4 @@
-# lets put all the students into an array
+# lets put all the students into a hash
 students = [
   {name: "Dr. Hannibal Lecter", cohort: :november},
   {name: "Darth Vader", cohort: :november},
