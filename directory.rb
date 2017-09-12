@@ -18,7 +18,7 @@ def input_students
       "designing killer weapons",
       "browsing youtube for hours and hours"
     ]
-    students << {name: name, cohort: :november, hobbies: hobby_list[rand(0..10)], height: "#{rand(4..6)} foot and #{rand(1..12)} inches"}
+    students << {name: name, cohort: :November, hobbies: hobby_list[rand(0..10)], height: "#{rand(4..6)} foot and #{rand(1..12)} inches"}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -26,19 +26,19 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy".center(100)
-  puts "-------------".center(100)
+  puts "The students of Villains Academy"
+  puts "-------------"
 end
 
 def print(students)
   students.each_with_index do |student, i|
-      puts "#{i+1}: #{student[:name]} is in the #{student[:cohort]} cohort, likes #{student[:hobbies]} and is #{student[:height]} tall.".center(100)
+      puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
   end
 end
 
 def print_footer(students)
-  puts "-------------".center(100)
-  puts "Overall, we have #{students.count} great students".center(100)
+  puts "-------------"
+  puts "Overall, we have #{students.count} great students"
 end
 
 # nothing happens until we call the methods
