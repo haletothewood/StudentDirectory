@@ -18,7 +18,7 @@ def input_students
       "designing killer weapons",
       "browsing youtube for hours and hours"
     ]
-    students << {name: name, cohort: :November, hobbies: hobby_list[rand(0..10)], height: "#{rand(4..6)} foot and #{rand(1..12)} inches"}
+    students << {name: name, cohort: :November, hobbies: hobby_list[rand(0..10)], height: "#{rand(4..6)} foot, #{rand(1..12)} inches"}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
