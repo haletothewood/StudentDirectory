@@ -23,11 +23,9 @@ def print_header
   puts "-------------"
 end
 
-def print(students, letter = nil)
+def print(students)
   students.each_with_index do |student, i|
-    if letter != nil && student[:name].start_with?(letter)
-      puts "#{i+1}: #{student[:name]} (#{student[:cohort]} cohort)"
-    elsif letter == nil
+    if student[:name].length < 12
       puts "#{i+1}: #{student[:name]} (#{student[:cohort]} cohort)"
     end
   end
@@ -40,5 +38,5 @@ end
 # nothing happens until we call the methods
 students = input_students
 print_header
-print(students, "J")
+print(students)
 print_footer(students)
