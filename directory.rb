@@ -1,3 +1,26 @@
+def interactive_menu
+  students = []
+  loop do
+    puts "What would you like to do?"
+    puts "1. Input the students"
+    puts "2. Show the student directory"
+    puts "9. Exit"
+
+    selection = gets.chomp
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print(students)
+      when "9"
+        exit
+      else
+        puts "Please enter a number from 1, 2 or 9"
+    end
+  end
+end
+
+
 def prompt
   puts "Please enter the names of the student to enter:"
   @name = gets.chop.capitalize
@@ -62,5 +85,4 @@ def print_footer(students)
 end
 
 # nothing happens until we call the methods
-students = input_students
-print(students)
+interactive_menu
