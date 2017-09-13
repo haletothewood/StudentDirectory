@@ -36,9 +36,15 @@ def print_header
   puts "-------------"
 end
 
-def print(students)
-  students.each_with_index do |student, i|
-      puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
+def print(students, cohort=nil)
+  if cohort != nil
+    students.select {|student| student[:cohort] == cohort}.each_with_index do |student, i|
+    puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
+    end
+  else
+    students.each_with_index do |student, i|
+    puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
+    end
   end
 end
 
