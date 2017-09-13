@@ -24,7 +24,7 @@ def input_students
       "designing killer weapons",
       "browsing youtube for hours and hours"
     ]
-  students << {name: @name, cohort: @cohort.to_sym, hobbies: hobby_list[rand(0..10)], height: "#{rand(4..6)} foot, #{rand(1..12)} inches"}
+  students << {name: @name, cohort: @cohort.to_sym, hobbies: hobby_list.sample, height: "#{rand(4..6)} foot, #{rand(1..12)} inches"}
   puts "Now we have #{students.count} students"
   prompt
   end
@@ -37,14 +37,18 @@ def print_header
 end
 
 def print(students, cohort=nil)
-  if cohort != nil
-    students.select {|student| student[:cohort] == cohort}.each_with_index do |student, i|
-    puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
+  if students != []
+    print_header
+    if cohort != nil
+      students.select do |student| student[:cohort] == cohort end.each_with_index do |student, i|
+        puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
+      end
+    else
+      students.each_with_index do |student, i|
+        puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
+      end
     end
-  else
-    students.each_with_index do |student, i|
-    puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
-    end
+    print_footer(students)
   end
 end
 
@@ -59,6 +63,4 @@ end
 
 # nothing happens until we call the methods
 students = input_students
-print_header
 print(students)
-print_footer(students)
