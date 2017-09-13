@@ -1,9 +1,9 @@
 def prompt
   puts "Please enter the names of the student to enter:"
-  @name = gets.chomp.capitalize
+  @name = gets.chop.capitalize
   if !@name.empty?
     puts "What cohort are they in?"
-    @cohort = gets.chomp.capitalize
+    @cohort = gets.chop.capitalize
   end
 end
 
