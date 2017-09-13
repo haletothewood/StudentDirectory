@@ -1,9 +1,9 @@
 def prompt
   puts "Please enter the names of the student to enter:"
-  @name = gets.chomp
+  @name = gets.chomp.capitalize
   if !@name.empty?
     puts "What cohort are they in?"
-    @cohort = gets.chomp
+    @cohort = gets.chomp.capitalize
   end
 end
 
@@ -44,7 +44,11 @@ end
 
 def print_footer(students)
   puts "-------------"
-  puts "Overall, we have #{students.count} great students"
+  if students.count != 1
+    puts "Overall, we have #{students.count} great students"
+  else
+    puts "Overall, we have #{students.count} great student."
+  end
 end
 
 # nothing happens until we call the methods
