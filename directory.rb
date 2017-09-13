@@ -1,25 +1,31 @@
-def interactive_menu
-  students = []
-  loop do
-    puts "What would you like to do?"
-    puts "1. Input the students"
-    puts "2. Show the student directory"
-    puts "9. Exit"
+@students = []
 
-    selection = gets.chomp
-    case selection
-      when "1"
-        students = input_students
-      when "2"
-        print(students)
-      when "9"
-        exit
-      else
-        puts "Please enter a number from 1, 2 or 9"
-    end
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
   end
 end
 
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      print_students_list
+    when "9"
+      exit
+    else
+      puts "Please enter a number from 1, 2 or 9"
+  end
+end
+
+def print_menu
+  puts "What would you like to do?"
+  puts "1. Input the students"
+  puts "2. Show the student directory"
+  puts "9. Exit"
+end
 
 def prompt
   puts "Please enter the names of the student to enter:"
@@ -27,31 +33,26 @@ def prompt
   if !@name.empty?
     puts "What cohort are they in?"
     @cohort = gets.chop.capitalize
+    puts "What do they like to do?"
+    @hobby = gets.chop
+    puts "And finally, what is their height in feet and inches?"
+    @height = gets.chop
   end
 end
 
 def input_students
   prompt
-  students = []
   while !@name.empty? do
-  hobby_list = [
-      "chess",
-      "revenge",
-      "general evilness",
-      "knitting",
-      "concocting plans to take over the world",
-      "butterfly collecting",
-      "resurrecting the dead",
-      "swimming",
-      "coding",
-      "designing killer weapons",
-      "browsing youtube for hours and hours"
-    ]
-  students << {name: @name, cohort: @cohort.to_sym, hobbies: hobby_list.sample, height: "#{rand(4..6)} foot, #{rand(1..12)} inches"}
-  puts "Now we have #{students.count} students"
+
+  @students << {name: @name, cohort: @cohort, hobbies: @hobby, height: @height}
+  if @students.count == 1
+    puts "Now we have #{@students.count} student"
+  else
+    puts "Now we have #{@students.count} students"
+  end
   prompt
   end
-  students
+  @students
 end
 
 def print_header
@@ -59,30 +60,23 @@ def print_header
   puts "-------------"
 end
 
-def print(students, cohort=nil)
-  if students != []
-    print_header
-    if cohort != nil
-      students.select do |student| student[:cohort] == cohort end.each_with_index do |student, i|
-        puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
-      end
-    else
-      students.each_with_index do |student, i|
-        puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
-      end
-    end
-    print_footer(students)
-  end
-end
-
-def print_footer(students)
+def print_footer
   puts "-------------"
-  if students.count != 1
-    puts "Overall, we have #{students.count} great students"
+  if @students.count != 1
+    puts "Overall, we have #{@students.count} great students"
   else
-    puts "Overall, we have #{students.count} great student."
+    puts "Overall, we have #{@students.count} great student."
   end
 end
 
-# nothing happens until we call the methods
+def print_students_list
+  if @students != []
+    print_header
+    @students.each_with_index do |student, i|
+      puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20) + "They like to #{student[:hobbies]} and are #{student[:height]} tall.".center(35)
+    end
+    print_footer
+  end
+end
+
 interactive_menu
