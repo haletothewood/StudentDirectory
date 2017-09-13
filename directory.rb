@@ -7,6 +7,15 @@ def interactive_menu
   end
 end
 
+def print_menu
+  puts "What would you like to do?"
+  puts "1. Input the students"
+  puts "2. Show the student directory"
+  puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
+  puts "9. Exit"
+end
+
 def process(selection)
   case selection
     when "1"
@@ -22,15 +31,6 @@ def process(selection)
     else
       puts "Please enter a number from 1, 2 or 9"
   end
-end
-
-def print_menu
-  puts "What would you like to do?"
-  puts "1. Input the students"
-  puts "2. Show the student directory"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
 end
 
 def prompt
@@ -69,8 +69,8 @@ def save_students
   puts "-------------"
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -101,7 +101,5 @@ def print_students_list
     print_footer
   end
 end
-
-
 
 interactive_menu
