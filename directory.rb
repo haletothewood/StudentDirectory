@@ -1,11 +1,17 @@
-def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+def prompt
+  puts "Please enter the names of the student to enter:"
+  @name = gets.chomp
+  if !@name.empty?
+    puts "What cohort are they in?"
+    @cohort = gets.chomp
+  end
+end
 
+def input_students
+  prompt
   students = []
-  name = gets.chomp
-  while !name.empty? do
-    hobby_list = [
+  while !@name.empty? do
+  hobby_list = [
       "chess",
       "revenge",
       "general evilness",
@@ -18,9 +24,9 @@ def input_students
       "designing killer weapons",
       "browsing youtube for hours and hours"
     ]
-    students << {name: name, cohort: :November, hobbies: hobby_list[rand(0..10)], height: "#{rand(4..6)} foot, #{rand(1..12)} inches"}
-    puts "Now we have #{students.count} students"
-    name = gets.chomp
+  students << {name: @name, cohort: @cohort.to_sym, hobbies: hobby_list[rand(0..10)], height: "#{rand(4..6)} foot, #{rand(1..12)} inches"}
+  puts "Now we have #{students.count} students"
+  prompt
   end
   students
 end
