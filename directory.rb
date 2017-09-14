@@ -61,7 +61,8 @@ def input_students
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  puts "What would you like to call your saved file?"
+  file = File.open(STDIN.gets.chomp, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
