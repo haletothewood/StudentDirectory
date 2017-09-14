@@ -88,7 +88,7 @@ def load_students
   if File.exists?(filename)
     CSV.foreach(filename) do |row|
         name, cohort = row
-        input_student(name, cohort.to_sym)
+        input_student(name, cohort)
     end
   else
     puts "Sorry, #{filename} doesn't exist."
@@ -135,7 +135,7 @@ def print_students_list
     end
     index = 1
     @possible_cohorts.each do |cohort|
-      array.each_with_index do |student|
+      array.each do |student|
         if cohort == student[1]
           puts "#{index}: #{student[0]}".ljust(20) + "(#{student[1]} Cohort)".center(20)
           index += 1
