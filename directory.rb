@@ -29,7 +29,7 @@ def process(selection)
     when "9"
       exit
     else
-      puts "Please enter a number from 1, 2 or 9"
+      puts "Please enter 1, 2, 3, 4, or 9"
   end
 end
 
@@ -62,13 +62,13 @@ end
 
 def save_students
   puts "What would you like to call your saved file?"
-  file = File.open(STDIN.gets.chomp, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  file = File.open(STDIN.gets.chomp, "w") do |f|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      f.puts csv_line
+    end
   end
-  file.close
   puts "Your file has been saved."
   puts "-------------"
 end
@@ -78,17 +78,17 @@ def load_students
   input = STDIN.gets.chomp
   input.empty? ? filename = "students.csv" : filename = input
   if File.exists?(filename)
-    file = File.open(filename, "r")
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      input_student(name, cohort)
+    file = File.open(filename, "r") do |f|
+      f.readlines.each do |line|
+        name, cohort = line.chomp.split(',')
+        input_student(name, cohort)
+      end
     end
   else
     puts "Sorry, #{filename} doesn't exist."
     puts "-------------"
     interactive_menu
   end
-  file.close
   puts "Your file #{filename} has been loaded."
   puts "-------------"
 end
