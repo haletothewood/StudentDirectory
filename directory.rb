@@ -42,11 +42,14 @@ def prompt
   end
 end
 
+def input_student(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+
 def input_students
   prompt
   while !@name.empty? do
-
-  @students << {name: @name, cohort: @cohort.to_sym}
+  input_student(@name, @cohort)
   if @students.count == 1
     puts "Now we have #{@students.count} student"
   else
@@ -73,7 +76,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    input_student(name, cohort)
   end
   file.close
 end
@@ -111,6 +114,9 @@ def print_students_list
       puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20)
     end
     print_footer
+  else
+    puts "Sorry, no students are yet enrolled!"
+    puts "-------------"
   end
 end
 
