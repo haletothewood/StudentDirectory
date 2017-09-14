@@ -3,7 +3,7 @@
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -35,10 +35,10 @@ end
 
 def prompt
   puts "Please enter the names of the student to enter:"
-  @name = gets.chop.capitalize
+  @name = STDIN.gets.chomp.capitalize
   if !@name.empty?
     puts "What cohort are they in?"
-    @cohort = gets.chop.capitalize
+    @cohort = STDIN.gets.chomp.capitalize
   end
 end
 
@@ -78,6 +78,18 @@ def load_students(filename = "students.csv")
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
@@ -102,4 +114,5 @@ def print_students_list
   end
 end
 
+try_load_students
 interactive_menu
