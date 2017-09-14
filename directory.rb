@@ -1,6 +1,9 @@
 require 'csv'
 
 @students = []
+@possible_cohorts = [:January, :February, :March,
+  :April, :May, :June, :July, :August, :September,
+  :October, :November, :December]
 
 def interactive_menu
   loop do
@@ -40,12 +43,16 @@ def prompt
   @name = STDIN.gets.chomp.capitalize
   if !@name.empty?
     puts "What cohort are they in?"
-    @cohort = STDIN.gets.chomp.capitalize
+    @cohort = STDIN.gets.chomp.capitalize.to_sym
+    until @possible_cohorts.include?(@cohort) do
+      puts "I'm sorry I didn't get that, please enter a valid month"
+      @cohort = STDIN.gets.chomp.capitalize.to_sym
+    end
   end
 end
 
 def input_student(name, cohort)
-  @students << {name: name, cohort: cohort.to_sym}
+  @students << {name: name, cohort: cohort}
 end
 
 def input_students
@@ -122,8 +129,16 @@ end
 def print_students_list
   if @students != []
     print_header
-    @students.each_with_index do |student, i|
-      puts "#{i+1}: #{student[:name]}".ljust(20) + "(#{student[:cohort]} Cohort)".center(20)
+    array = []
+    @students.each do |student|
+      array << [student[:name], student[:cohort]]
+    end
+    @possible_cohorts.each do |cohort|
+      array.each_with_index do |student, i|
+        if cohort == student[1]
+          puts "#{i+1}: #{student[0]}".ljust(20) + "(#{student[1]} Cohort)".center(20)
+        end
+      end
     end
     print_footer
   else
