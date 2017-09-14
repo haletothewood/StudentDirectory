@@ -11,8 +11,8 @@ def print_menu
   puts "What would you like to do?"
   puts "1. Input the students"
   puts "2. Show the student directory"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"
 end
 
@@ -72,20 +72,30 @@ def save_students
   puts "-------------"
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    input_student(name, cohort)
+def load_students
+  puts "Please write the file would you like to load? Or press ENTER to load students.csv"
+  input = STDIN.gets.chomp
+  input.empty? ? filename = "students.csv" : filename = input
+  if File.exists?(filename)
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      input_student(name, cohort)
+    end
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    puts "-------------"
+    interactive_menu
   end
   file.close
+  puts "Your file #{filename} has been loaded."
+  puts "-------------"
 end
 
 def try_load_students
   filename = ARGV.first
   if filename.nil?
-    load_students("students.csv")
-    puts "Loaded #{@students.count} from students.csv"
+    interactive_menu
   elsif File.exists?(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
