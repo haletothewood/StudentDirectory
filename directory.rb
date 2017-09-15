@@ -137,7 +137,7 @@ def print_students_list
     @possible_cohorts.each do |cohort|
       array.each_with_index do |student|
         if cohort == student[1]
-          puts "#{index}: #{student[0]}".ljust(20) + "(#{student[1]} Cohort)".center(20)
+          puts "#{index}: #{student[0].split.map(&:capitalize).join(' ')}".ljust(20) + "(#{student[1]} Cohort)".center(20)
           index += 1
         end
       end
