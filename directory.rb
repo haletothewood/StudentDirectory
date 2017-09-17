@@ -18,6 +18,7 @@ def print_menu
   puts "2. Show the student directory"
   puts "3. Save the list to a file"
   puts "4. Load the list from a file"
+  puts "5. Remove a student from the directory"
   puts "9. Exit"
 end
 
@@ -31,6 +32,8 @@ def process(selection)
       save_students
     when "4"
       load_students
+    when "5"
+      remove_student
     when "9"
       exit
     else
@@ -49,6 +52,7 @@ def prompt
       @cohort = STDIN.gets.chomp.capitalize.to_sym
     end
   end
+  @students
 end
 
 def input_student(name, cohort)
@@ -65,6 +69,20 @@ def input_students
     puts "Now we have #{@students.count} students"
   end
   prompt
+  end
+  @students
+end
+
+def remove_student
+  puts "Please enter the name of the student you would like to remove"
+  name = gets.chomp
+  @students.each do |student|
+    if name == student[:name]
+      puts "-------------"
+      puts "#{student[:name]} has removed from the directory"
+      puts "-------------"
+      @students.delete(student)
+    end
   end
   @students
 end
@@ -113,17 +131,19 @@ def try_load_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "----------------" * 3
+  puts "The students of Villains Academy".center(47)
+  puts "----------------" * 3
 end
 
 def print_footer
-  puts "-------------"
+  puts "----------------" * 3
   if @students.count != 1
-    puts "Overall, we have #{@students.count} great students"
+    puts "Overall, we have #{@students.count} great students".center(47)
   else
-    puts "Overall, we have #{@students.count} great student."
+    puts "Overall, we have #{@students.count} great student.".center(47)
   end
+  puts "----------------" * 3
 end
 
 def print_students_list
@@ -137,7 +157,7 @@ def print_students_list
     @possible_cohorts.each do |cohort|
       array.each_with_index do |student|
         if cohort == student[1]
-          puts "#{index}: #{student[0].split.map(&:capitalize).join(' ')}".ljust(20) + "(#{student[1]} Cohort)".center(20)
+          puts "#{index}: #{student[0].split.map(&:capitalize).join(' ')}".ljust(20) + "(#{student[1]} Cohort)".center(40)
           index += 1
         end
       end
@@ -145,7 +165,6 @@ def print_students_list
     print_footer
   else
     puts "Sorry, no students are yet enrolled!"
-    puts "-------------"
   end
 end
 
